@@ -1,5 +1,5 @@
 select year, sum(status)
-  from (
+from (
   select
     h2.yr as year,
     (case when min(h1.m12) < 0 then 1 else 0 end) as status
