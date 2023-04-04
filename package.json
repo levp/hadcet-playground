@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "pg": "^8.10.0",
+    "pg-format": "^1.0.4"
+  }
+}

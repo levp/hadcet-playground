@@ -1,0 +1,23 @@
+version: '3.9'
+
+x-service-defaults: &service-defaults
+  restart: 'unless-stopped'
+  logging:
+    options:
+      max-file: '10'
+      max-size: '10mb'
+
+services:
+  pg:
+    <<: *service-defaults
+    image: 'postgres:15.2'
+    container_name: 'postgres_hadcet'
+    environment:
+      TZ: 'UTC'
+      POSTGRES_USER: 'postgres_hadcet'
+      POSTGRES_PASSWORD: '1234!@#$'
+    ports:
+      - '5432:5432'
+    volumes:
+      - './pg_data/:/var/lib/postgresql/data/'
+#      - './init-scripts/:/docker-entrypoint-initdb.d/:ro'
