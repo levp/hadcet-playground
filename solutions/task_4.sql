@@ -14,8 +14,8 @@ join (
   from hadcet
   where dy between 21 and 25
   group by yr
-  -- Only years with at least one day between the 21st and 25th having
-  -- less than zero degrees Celsius is considered a white Christmas.
+  -- Only years with at least one day between the 21st and 25th of december
+  -- having less than zero degrees Celsius is considered a white Christmas.
   having min(m12) < 0
 ) as h2
 -- Join the two lists by the logic in the task: ages 3 to 12 inclusive.
