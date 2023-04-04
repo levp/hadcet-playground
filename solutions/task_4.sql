@@ -1,20 +1,27 @@
 select
-  h2.yr as year,
-  sum(is_white_christmas) as white_christmas_count
+  h1.yr as yob, -- Year of birth.
+  count(*) as wwc -- White Christmas count.
 from (
-  select
-    yr,
-    (case when min(m12) < 0 then 1 else 0 end) as is_white_christmas
+  -- Make list of years in range.
+  select yr
   from hadcet
-  where dy between 21 and 25
+  where yr between 1805 and 1813
   group by yr
 ) as h1
 join (
-  select distinct yr
+  -- Make list of years with white Christmases.
+  select yr
   from hadcet
-  where yr between 1805 and 1813
+  where dy between 21 and 25
+  group by yr
+  -- Only years with at least one day between the 21st and 25th having
+  -- less than zero degrees Celsius is considered a white Christmas.
+  having min(m12) < 0
 ) as h2
-on h1.yr between h2.yr + 2 and h2.yr + 11
-group by h2.yr
-order by year
+-- Join the two lists by the logic in the task: ages 3 to 12 inclusive.
+-- Year of birth (h2.year) is considered age 1.
+-- NOTE: `between-and` is inclusive on both ends.
+on h2.yr between h1.yr + 2 and h1.yr + 11
+group by h1.yr
+order by yob
 ;
